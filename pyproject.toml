@@ -1,0 +1,26 @@
+[project]
+name = "pydantic-bug-repro"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Robert Craigie", email = "robert@craigie.dev" }
+]
+requires-python = ">=3.9"
+dependencies = []
+
+[project.optional-dependencies]
+pv1 = ["pydantic<2"]
+pv2 = ["pydantic>2"]
+
+[tool.uv]
+conflicts = [
+    [
+      { extra = "pv1" },
+      { extra = "pv2" },
+    ],
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
