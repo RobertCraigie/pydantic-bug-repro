@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 from pydantic import BaseModel
-from ._compat import PYDANTIC_V2
+from .legal_entity import LegalEntity
+
+if TYPE_CHECKING:
+    from .compensation import Compensation
 
 
 class Worker(BaseModel):
@@ -14,11 +17,4 @@ class Worker(BaseModel):
 
     manager: Optional[Worker] = None
 
-
-from .compensation import Compensation
-from .legal_entity import LegalEntity
-
-if PYDANTIC_V2:
-    Worker.model_rebuild()
-else:
-    Worker.update_forward_refs()  # type: ignore
+    model_config = {'defer_build': True}

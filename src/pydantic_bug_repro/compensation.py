@@ -1,18 +1,14 @@
 from __future__ import annotations
 
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 from pydantic import BaseModel
-from ._compat import PYDANTIC_V2
+
+if TYPE_CHECKING:
+    from .worker import Worker
 
 
 class Compensation(BaseModel):
     worker: Optional[Worker] = None
     worker_id: Optional[str] = None
 
-
-from .worker import Worker
-
-if PYDANTIC_V2:
-    Compensation.model_rebuild()
-else:
-    Compensation.update_forward_refs()  # type: ignore
+    model_config = {'defer_build': True}
